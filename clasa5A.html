@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Elevii clasei</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+      background-color: #33333377;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: snow;
+    }
+
+    .elevi-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .elev-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #333;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .elev-card:hover {
+      background-color: #46454569;
+      color: snow;
+    }
+
+  .log1{
+    position: relative;
+    margin-top: -33rem;
+  }
+
+    .logo{
+      margin-top: 0rem;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <img class="logo" src="./poze/Logo_KG_simbol_CMYK_red-removebg-preview.png">
+
+
+  <div class="log1">
+    <h1>Elevii clasei a V-a A</h1>
+      <div class="elevi-container" id="eleviContainer"></div>
+  </div>
+
+
+  <script>
+    fetch('clasa5A.json')
+      .then(response => response.json())
+      .then(lista => {
+        const container = document.getElementById('eleviContainer');
+        lista.forEach(elev => {
+          const card = document.createElement('div');
+          card.className = 'elev-card';
+          card.textContent = elev.nume;
+
+          card.onclick = () => {
+            if (elev.link && elev.link.trim() !== "") {
+              window.open(elev.link, '_blank');
+            } else {
+              alert(`Elevul ${elev.nume} nu are încă un link disponibil.`);
+            }
+          };
+
+          container.appendChild(card);
+        });
+      });
+  </script>
+
+</body>
+</html>

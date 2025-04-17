@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>eSituatie Elev King George</title>
+</head>
+<a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
+    <i class="fa fa-bars"></i>
+  </a>
+<body>
+    
+    <div class="topnav" id="myTopnav">
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown()">Modul 5 </button>
+            <div class="dropdown-content" id="dropdown1">
+                <a href="#">Clasa V A</a>
+                <a href="#">Clasa V B</a>
+                <a href="#">Clasa VI A</a>
+                <a href="#">Clasa VI B</a>
+                <a href="#">Clasa VI C</a>
+                <a href="#">Clasa VII A</a>
+                <a href="#">Clasa VII B</a>
+                <a href="#">Clasa VII C</a>
+                <a href="#">Clasa VIII A</a>
+                <a href="#">Clasa VIII B</a>
+                <a href="#">Clasa IX A</a>
+                <a href="#">Clasa IX B</a>
+                <a href="#">Clasa X </a>
+                <a href="#">Clasa XI</a>
+            </div>
+        </div>
+
+    <div class="topnav" id="myTopnav">
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown()">Modul 4 </button>
+            <div class="dropdown-content" id="dropdown1">
+                    <a href="#">Clasa V A</a>
+                    <a href="#">Clasa V B</a>
+                    <a href="#">Clasa VI A</a>
+                    <a href="#">Clasa VI B</a>
+                    <a href="#">Clasa VI C</a>
+                    <a href="#">Clasa VII A</a>
+                    <a href="#">Clasa VII B</a>
+                    <a href="#">Clasa VII C</a>
+                    <a href="#">Clasa VIII A</a>
+                    <a href="#">Clasa VIII B</a>
+                    <a href="#">Clasa IX A</a>
+                    <a href="#">Clasa IX B</a>
+                    <a href="#">Clasa X </a>
+                    <a href="#">Clasa XI</a>
+            </div>
+        </div>   
+
+    <div class="topnav" id="myTopnav">
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown()">Modul 3 </button>
+            <div class="dropdown-content" id="dropdown1">
+                        <a href="#">Clasa V A</a>
+                        <a href="#">Clasa V B</a>
+                        <a href="#">Clasa VI A</a>
+                        <a href="#">Clasa VI B</a>
+                        <a href="#">Clasa VI C</a>
+                        <a href="#">Clasa VII A</a>
+                        <a href="#">Clasa VII B</a>
+                        <a href="#">Clasa VII C</a>
+                        <a href="#">Clasa VIII A</a>
+                        <a href="#">Clasa VIII B</a>
+                        <a href="#">Clasa IX A</a>
+                        <a href="#">Clasa IX B</a>
+                        <a href="#">Clasa X </a>
+                        <a href="#">Clasa XI</a>
+                    </div>
+                </div>
+
+                <div class="topnav" id="myTopnav">
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="toggleDropdown()">Modul 2 </button>
+                        <div class="dropdown-content" id="dropdown1">
+                            <a href="#">Clasa V A</a>
+                            <a href="#">Clasa V B</a>
+                            <a href="#">Clasa VI A</a>
+                            <a href="#">Clasa VI B</a>
+                            <a href="#">Clasa VI C</a>
+                            <a href="#">Clasa VII A</a>
+                            <a href="#">Clasa VII B</a>
+                            <a href="#">Clasa VII C</a>
+                            <a href="#">Clasa VIII A</a>
+                            <a href="#">Clasa VIII B</a>
+                            <a href="#">Clasa IX A</a>
+                            <a href="#">Clasa IX B</a>
+                            <a href="#">Clasa X </a>
+                            <a href="#">Clasa XI</a>
+                        </div>
+                    </div>
+
+                    <div class="topnav" id="myTopnav">
+                        <div class="dropdown">
+                            <button class="dropbtn" onclick="toggleDropdown()">Modul 1 </button>
+                            <div class="dropdown-content" id="dropdown1">
+                                <a href="clasa5A.html">Clasa V A</a>
+                                <a href="clasa5B.html">Clasa V B</a>
+                                <a href="#">Clasa VI A</a>
+                                <a href="#">Clasa VI B</a>
+                                <a href="#">Clasa VI C</a>
+                                <a href="#">Clasa VII A</a>
+                                <a href="#">Clasa VII B</a>
+                                <a href="#">Clasa VII C</a>
+                                <a href="#">Clasa VIII A</a>
+                                <a href="#">Clasa VIII B</a>
+                                <a href="#">Clasa IX A</a>
+                                <a href="#">Clasa IX B</a>
+                                <a href="#">Clasa X </a>
+                                <a href="#">Clasa XI</a>
+                            </div>
+                        </div>
+        <a href="#about">About</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+      </div>
+      
+      
+      <div style="padding-left:16px">
+      </div>
+      
+      <script>
+        function toggleMenu() {
+          var x = document.getElementById("myTopnav");
+          if (x.className === "topnav") {
+            x.className += " responsive";
+          } else {
+            x.className = "topnav";
+          }
+        }
+      
+        function toggleDropdown() {
+          var dropdown = document.getElementById("dropdown1");
+          if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+          } else {
+            dropdown.style.display = "block";
+          }
+        }
+      </script>
+      
+      
+      <img src="./poze/Logo_KG_simbol_CMYK_red-removebg-preview.png">
+    
+      
+       
+    
+
+    
+
+
+
+</body>
+</html>

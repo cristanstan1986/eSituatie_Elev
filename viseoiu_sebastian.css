@@ -1,0 +1,90 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background: #454444;
+    padding: 20px;
+    margin: 0;
+}
+
+.container {
+    background: #fbfafa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 1000px;
+    margin: 0 auto;
+    overflow-x: auto; /* scroll orizontal pe ecrane mici */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    min-width: 600px; /* previne compresia totală pe ecrane mici */
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+th {
+    background: #007BFF;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+tbody tr:hover {
+    background-color: #e6f7ff;
+    cursor: pointer;
+}
+
+td[contenteditable="true"] {
+    background-color: #e9f7ef;
+    transition: background-color 0.3s ease, outline 0.3s ease;
+}
+
+td[contenteditable="true"]:hover {
+    background-color: #d6f5e3;
+    outline: 1px dashed #28a745;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* 🔽 MEDIA QUERIES pentru ecrane mai mici (responsive) */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    table {
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 6px;
+    }
+
+    .container {
+        padding: 8px;
+    }
+}
+

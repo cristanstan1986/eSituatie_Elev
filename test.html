@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Note și Grafic</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #eee;
+    }
+    td[contenteditable="true"] {
+      background-color: #fdfdfd;
+    }
+    button {
+      margin-right: 10px;
+      margin-bottom: 10px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+    canvas {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Notele Mele</h1>
+
+  <table id="gradesTable">
+    <thead>
+      <tr>
+        <th>Materie</th>
+        <th>Notă</th>
+        <th>Acțiune</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <button onclick="addRow()">Adaugă Materie</button>
+  <button onclick="saveData()">Salvează Date</button>
+  <button onclick="generateChart()">Generează Grafic</button>
+
+  <canvas id="gradesChart" width="600" height="300"></canvas>
+
+  <script>
+    const tableBody = document.querySelector("#gradesTable tbody");
+
+    function addRow(subject = "", grade = "") {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td contenteditable="true">${subject}</td>
+        <td contenteditable="true">${grade}</td>
+        <td><button onclick="deleteRow(this)">Șterge</button></td>
+      `;
+      tableBody.appendChild(row);
+    }
+
+    function deleteRow(btn) {
+      const row = btn.closest("tr");
+      row.remove();
+    }
+
+    function saveData() {
+      const rows = tableBody.querySelectorAll("tr");
+      const data = [];
+
+      rows.forEach(row => {
+        const subject = row.cells[0].innerText.trim();
+        const grade = parseFloat(row.cells[1].innerText.trim());
+        if (subject && !isNaN(grade)) {
+          data.push({ subject, grade });
+        }
+      });
+
+      localStorage.setItem("grades", JSON.stringify(data));
+      alert("✅ Datele au fost salvate cu succes!");
+    }
+
+    function loadData() {
+      const saved = localStorage.getItem("grades");
+      if (saved) {
+        const data = JSON.parse(saved);
+        data.forEach(row => addRow(row.subject, row.grade));
+      }
+    }
+
+    function generateChart() {
+      const rows = tableBody.querySelectorAll("tr");
+      const labels = [];
+      const data = [];
+
+      rows.forEach(row => {
+        const subject = row.cells[0].innerText.trim();
+        const grade = parseFloat(row.cells[1].innerText.trim());
+        if (subject && !isNaN(grade)) {
+          labels.push(subject);
+          data.push(grade);
+        }
+      });
+
+      const ctx = document.getElementById("gradesChart").getContext("2d");
+
+      // Distruge vechiul grafic dacă există
+      if (window.myChart) {
+        window.myChart.destroy();
+      }
+
+      window.myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "Note",
+            data: data,
+            backgroundColor: "#4CAF50"
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 10
+            }
+          }
+        }
+      });
+    }
+
+    function checkMissingModule1() {
+      const rows = tableBody.querySelectorAll("tr");
+      let foundModule1 = false;
+      let hasGrade = false;
+
+      rows.forEach(row => {
+        const subject = row.cells[0].innerText.trim().toLowerCase();
+        const grade = parseFloat(row.cells[1].innerText.trim());
+
+        if (subject === "modulul 1") {
+          foundModule1 = true;
+          if (!isNaN(grade)) {
+            hasGrade = true;
+          }
+        }
+      });
+
+      if (foundModule1 && !hasGrade) {
+        alert("⚠️ Nu a fost completată nota la Modulul 1!");
+        // Aici se poate adăuga trimitere de email dacă e configurat
+      }
+    }
+
+    // Când pagina se încarcă
+    window.onload = () => {
+      loadData();
+      checkMissingModule1();
+    };
+  </script>
+</body>
+</html>
