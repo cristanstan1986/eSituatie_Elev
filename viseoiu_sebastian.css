@@ -2,18 +2,22 @@
 body {
     font-family: Arial, sans-serif;
     background: #454444;
+    background-image: url(https://m.media-amazon.com/images/I/61e48gEIUeL._AC_UF1000,1000_QL80_.jpg);
+    background-size:cover;
+    background-repeat: no-repeat;
     padding: 20px;
     margin: 0;
 }
 
 .container {
-    background: #fbfafa;
+    background: #fefefef7;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     max-width: 1000px;
     margin: 0 auto;
     overflow-x: auto; /* scroll orizontal pe ecrane mici */
+    margin-top: 11.5rem;
 }
 
 table {

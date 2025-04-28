@@ -1,60 +1,223 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Note Modul I</title>
+    <title>Note Modul I - Vișoiu Sebastian</title>
     <link rel="stylesheet" href="viseoiu_sebastian.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f2f2f2;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 6vw;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 4vw;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .percent {
+            font-weight: bold;
+            color: green;
+        }
+        canvas {
+            margin-top: 40px;
+            width: 100% !important;
+            height: auto !important;
+        }
+        @media (min-width: 600px) {
+            h1 {
+                font-size: 32px;
+            }
+            table {
+                font-size: 18px;
+            }
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Note Vișoiu Sebastian Modul I</h1>
+        <h1>Vișoiu Sebastian - Modul I</h1>
         <table id="gradesTable">
             <thead>
                 <tr>
                     <th>Disciplina</th>
                     <th>Nota 1</th>
                     <th>Nota 2</th>
-                    <th>Nota 3</th>
-                    <th>Procentaj</th>
+                    <th>Nota 3 (opțional)</th>
+                    <th>Media</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Limba Română</td>
-                    <td contenteditable="true">6</td>
-                    <td contenteditable="true">6</td>
-                    <td contenteditable="true">6</td>
-                    <td class="percent">75%</td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td class="average">-</td>
                 </tr>
                 <tr>
                     <td>Matematică</td>
-                    <td contenteditable="true">6</td>
-                    <td contenteditable="true">8</td>
-                    <td contenteditable="true">7</td>
-                    <td class="percent">55%</td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td class="average">-</td>
                 </tr>
                 <tr>
                     <td>Geografie</td>
-                    <td contenteditable="true">6</td>
-                    <td contenteditable="true">8</td>
-                    <td contenteditable="true">7</td>
-                    <td class="percent">55%</td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td class="average">-</td>
                 </tr>
                 <tr>
-                    <td>Limba Engleza</td>
-                    <td contenteditable="true">6</td>
-                    <td contenteditable="true">8</td>
-                    <td contenteditable="true">7</td>
-                    <td class="percent">55%</td>
+                    <td>Limba Engleză</td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td class="average">-</td>
                 </tr>
-                <!-- Poți adăuga mai multe rânduri aici după nevoie -->
             </tbody>
         </table>
-        <canvas id="gradesChart" width="400" height="200"></canvas>
+        <button onclick="updateChart()">Generează Grafic</button>
+        <button onclick="saveData()">Salvează Notelor</button>
+        <canvas id="gradesChart"></canvas>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const ctx = document.getElementById('gradesChart').getContext('2d');
+        let gradesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Media pe Disciplina',
+                    data: [],
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }
+            }
+        });
+
+        // Funcția care salvează datele în LocalStorage
+        function saveData() {
+            const table = document.getElementById('gradesTable').getElementsByTagName('tbody')[0];
+            const rows = table.getElementsByTagName('tr');
+            const dataToSave = [];
+
+            for (let row of rows) {
+                const disciplina = row.cells[0].innerText.trim();
+                const nota1 = row.cells[1].innerText.trim();
+                const nota2 = row.cells[2].innerText.trim();
+                const nota3 = row.cells[3].innerText.trim();
+                dataToSave.push([disciplina, nota1, nota2, nota3]);
+            }
+
+            // Salvează datele în LocalStorage
+            localStorage.setItem('gradesData', JSON.stringify(dataToSave));
+        }
+
+        // Funcția care încarcă datele din LocalStorage
+        function loadData() {
+            const savedData = localStorage.getItem('gradesData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const table = document.getElementById('gradesTable').getElementsByTagName('tbody')[0];
+
+                for (let i = 0; i < data.length; i++) {
+                    const row = table.getElementsByTagName('tr')[i];
+                    row.cells[1].innerText = data[i][1];
+                    row.cells[2].innerText = data[i][2];
+                    row.cells[3].innerText = data[i][3];
+                }
+            }
+        }
+
+        function updateChart() {
+            const table = document.getElementById('gradesTable').getElementsByTagName('tbody')[0];
+            const rows = table.getElementsByTagName('tr');
+            let labels = [];
+            let data = [];
+
+            for (let row of rows) {
+                const disciplina = row.cells[0].innerText.trim();
+                const nota1 = parseFloat(row.cells[1].innerText.trim());
+                const nota2 = parseFloat(row.cells[2].innerText.trim());
+                const nota3Text = row.cells[3].innerText.trim();
+                const nota3 = nota3Text ? parseFloat(nota3Text) : null;
+
+                if (!isNaN(nota1) && !isNaN(nota2)) {
+                    let suma = nota1 + nota2;
+                    let count = 2;
+
+                    if (nota3 !== null && !isNaN(nota3)) {
+                        suma += nota3;
+                        count++;
+                    }
+
+                    const media = (suma / count).toFixed(2);
+                    row.cells[4].innerText = media;
+
+                    labels.push(disciplina);
+                    data.push(media);
+                } else {
+                    row.cells[4].innerText = '-';
+                }
+            }
+
+            gradesChart.data.labels = labels;
+            gradesChart.data.datasets[0].data = data;
+            gradesChart.update();
+        }
+
+        // Încarcă datele salvate atunci când pagina se încarcă
+        window.onload = loadData;
+    </script>
 </body>
 </html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Evenimente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f2f2f2;
+            margin: 0;
+            text-align: center;
+            background-image: url(https://static.vecteezy.com/system/resources/previews/012/086/236/non_2x/back-to-school-doodles-in-chalkboard-background-free-vector.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        
+        }
+        th {
+            background-color: #f41313;
+            color: white;font-weight: 900;
+        }
+        td {
+            cursor: pointer;
+        }
+        td.selected {
+            background-color: #ffcccc;
+        }
+        td.selected:hover {
+            background-color: #ff9999; /* Culoare mai închisă la hover */
+        }
+        #calendar {
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #fe0606;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ffffff;
+            color: black;
+        }
+        .delete-btn, .edit-btn {
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .edit-btn {
+            background-color: #ffc107;
+        }
+        .delete-btn:hover, .edit-btn:hover {
+            background-color: #c82333;
+        }
+        tr{
+            color: snow;
+            font-weight: 900;
+            font-size: 20px;
+        }
+
+        .logo{
+            margin-left: -1430px;
+            margin-top: -490rem;
+            position: relative;
+        }
+
+        #yearSelect{
+            border-radius: 10px;
+        }
+
+        #monthSelect{
+            border-radius: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <img src="https://storage0.dms.mpinteractiv.ro/media/1/1/1688/22691438/1/proiect-an-scolar-2025-2026.jpg?height=713&width=842"
+            style="width: 800px; margin-top: 2rem;">
+
+    <br><br><br>
+
+    <img class="logo" src="./poze/Logo_KG_simbol_CMYK_red-removebg-preview.png">
+
+    <h1 style="color: snow;">Calendarul Evenimentelor</h1>
+    
+    <!-- Calendarul selectabil -->
+    <div id="calendar">
+        <select id="yearSelect" onchange="generateCalendar()">
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+        </select>
+        <select id="monthSelect" onchange="generateCalendar()">
+            <option value="0">Ianuarie</option>
+            <option value="1">Februarie</option>
+            <option value="2">Martie</option>
+            <option value="3">Aprilie</option>
+            <option value="4">Mai</option>
+            <option value="5">Iunie</option>
+            <option value="6">Iulie</option>
+            <option value="7">August</option>
+            <option value="8">Septembrie</option>
+            <option value="9">Octombrie</option>
+            <option value="10">Noiembrie</option>
+            <option value="11">Decembrie</option>
+        </select>
+    </div>
+
+    <div id="calendarTable"></div>
+
+    <h3 style="color: snow;">Evenimente</h3>
+    <table id="eventsTable">
+        <thead>
+            <tr>
+                <th>Data Eveniment</th>
+                <th>Descriere</th>
+                <th>Locație</th>
+                <th>Acțiuni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" id="selectedDate" disabled></td>
+                <td><input type="text" id="eventDesc"></td>
+                <td><input type="text" id="eventLocation"></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="saveEvent()">Salvează Eveniment</button>
+
+    <script>
+        // Variabile globale
+        let selectedDate = '';
+        
+        // Funcția care generează calendarul
+        function generateCalendar() {
+            const year = parseInt(document.getElementById('yearSelect').value);
+            const month = parseInt(document.getElementById('monthSelect').value);
+
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
+            const daysInMonth = lastDayOfMonth.getDate();
+
+            const calendarTable = document.getElementById('calendarTable');
+            calendarTable.innerHTML = '';
+            let calendarHTML = '<table><thead><tr>';
+
+            // Afisăm zilele săptămânii
+            const weekdays = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+            for (const weekday of weekdays) {
+                calendarHTML += `<th>${weekday}</th>`;
+            }
+            calendarHTML += '</tr></thead><tbody><tr>';
+
+            // Calculăm ziua săptămânii pentru prima zi a lunii
+            const firstDay = firstDayOfMonth.getDay();
+
+            // Adăugăm celule goale pentru zilele dinainte de 1 ale lunii
+            for (let i = 0; i < firstDay; i++) {
+                calendarHTML += '<td></td>';
+            }
+
+            // Adăugăm zilele lunii
+            for (let day = 1; day <= daysInMonth; day++) {
+                const currentDate = new Date(year, month, day);
+                const dayOfWeek = currentDate.getDay();
+                calendarHTML += `<td onclick="selectDate('${currentDate.toLocaleDateString()}')">${day}</td>`;
+
+                // La sfârșitul săptămânii, începem un nou rând
+                if (dayOfWeek === 6) {
+                    calendarHTML += '</tr><tr>';
+                }
+            }
+
+            // Completăm rândul cu celule goale dacă este necesar
+            while (calendarHTML.split('<tr>').length - 1 < 6) {
+                calendarHTML += '<td></td>';
+            }
+
+            calendarHTML += '</tr></tbody></table>';
+            calendarTable.innerHTML = calendarHTML;
+        }
+
+        // Funcția care salvează evenimentul
+        function saveEvent() {
+            const desc = document.getElementById('eventDesc').value;
+            const location = document.getElementById('eventLocation').value;
+            if (!selectedDate || !desc || !location) {
+                alert('Toate câmpurile trebuie completate!');
+                return;
+            }
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${selectedDate}</td>
+                <td>${desc}</td>
+                <td>${location}</td>
+                <td>
+                    <button class="edit-btn" onclick="editEvent(this)">Modifică</button>
+                    <button class="delete-btn" onclick="deleteEvent(this)">Șterge</button>
+                </td>
+            `;
+            document.querySelector('#eventsTable tbody').appendChild(row);
+
+            // Salvăm în LocalStorage
+            const events = JSON.parse(localStorage.getItem('events')) || [];
+            events.push({ date: selectedDate, description: desc, location: location });
+            localStorage.setItem('events', JSON.stringify(events));
+
+            // Resetăm câmpurile
+            document.getElementById('eventDesc').value = '';
+            document.getElementById('eventLocation').value = '';
+            selectedDate = '';
+            document.getElementById('selectedDate').value = '';
+        }
+
+        // Funcția care selectează data și o afișează în tabel
+        function selectDate(date) {
+            selectedDate = date;
+            document.getElementById('selectedDate').value = selectedDate;
+        }
+
+        // Funcția care editează un eveniment
+        function editEvent(button) {
+            const row = button.closest('tr');
+            const cells = row.getElementsByTagName('td');
+            document.getElementById('selectedDate').value = cells[0].innerText;
+            document.getElementById('eventDesc').value = cells[1].innerText;
+            document.getElementById('eventLocation').value = cells[2].innerText;
+
+            // Ștergem evenimentul vechi înainte de a-l modifica
+            deleteEvent(button);
+        }
+
+        // Funcția care șterge un eveniment
+        function deleteEvent(button) {
+            const row = button.closest('tr');
+            row.remove();
+
+            // Actualizăm LocalStorage
+            const events = JSON.parse(localStorage.getItem('events')) || [];
+            const updatedEvents = events.filter(event => event.date !== row.cells[0].innerText);
+            localStorage.setItem('events', JSON.stringify(updatedEvents));
+        }
+
+        // Încărcăm evenimentele din LocalStorage la încărcarea paginii
+        window.onload = function() {
+            const events = JSON.parse(localStorage.getItem('events')) || [];
+            events.forEach(event => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${event.date}</td>
+                    <td>${event.description}</td>
+                    <td>${event.location}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editEvent(this)">Modifică</button>
+                        <button class="delete-btn" onclick="deleteEvent(this)">Șterge</button>
+                    </td>
+                `;
+                document.querySelector('#eventsTable tbody').appendChild(row);
+            });
+
+            // Generăm calendarul inițial
+            generateCalendar();
+        }
+    </script>
+
+</body>
+</html>

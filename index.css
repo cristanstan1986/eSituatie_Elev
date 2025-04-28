@@ -1,5 +1,7 @@
 body{
-  background-image: url(./poze/KiRwRFp.jpg);
+  backface-visibility: hidden;
+  background-image: url(https://images.pexels.com/photos/5088017/pexels-photo-5088017.jpeg?cs=srgb&dl=pexels-olia-danilevich-5088017.jpg&fm=jpg);
+  background-size: cover;
 }
 
 .topnav {
@@ -37,14 +39,15 @@ body{
   
   /* Style the dropdown button to fit inside the topnav */
   .dropdown .dropbtn {
-    font-size: 17px;
+    font-size: 22px;
     border: none;
     outline: none;
-    color: white;
+    color: rgb(249, 247, 247);
     padding: 8px 12px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
+    font-weight: 900;
   }
   
   /* Style the dropdown content (hidden by default) */
@@ -54,6 +57,8 @@ body{
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    background-color: rgba(193, 192, 192, 0.411);
+    border-radius: 7px;
   }
   
   /* Style the links inside the dropdown */
@@ -157,14 +162,42 @@ body{
     }
   }
 
- .fundal{
-  margin-left: 100rem;
-  margin-top: -30rem;
+
+.fundal{
+  width: 780px;
+  height: 250px;
   float: right;
-  position: fixed;
- }
+  margin-top: 7rem;
+  margin-right: 0rem;
+}
+
+.fundal1{
+  width: 980px;
+  height: 250px;
+  float: left;
+  margin-top: -20.5rem;
+  margin-left:55vh ;
+}
 
  
+.fundal3{
+  width:280px;
+  height: 380px;
+  float: right;
+  margin-top: -7rem;
+  margin-inline-start: 2px;
+}
+
+span{
+  text-align:justify;
+  font-size: 3rem;
+  color: rgb(246, 240, 240);
+  margin-left: 8px;font-weight: 900;
+}
+span:hover{
+  color: rgb(239, 48, 48);
+  transition:1.5s 
+}
 
   
   
